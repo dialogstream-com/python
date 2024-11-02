@@ -1,5 +1,11 @@
 # Changelog
 
+
+## [1.3.10] - 2024-11-02
+
+### Zmieniono
+- aktualizacja dokumentacji
+  
 ## [1.3.9] - 2024-11-02
 
 ### Dodano
@@ -149,16 +155,6 @@
   - Dodano informacje o portach i wolumenach
   - Dodano instrukcje debugowania
 
-### Uwaga
-Dla instalacji Docker:
-```bash
-# Tryb produkcyjny
-docker compose up -d
-
-# Tryb developerski
-docker compose -f docker-compose.yml -f docker-compose.override.yml up
-```
-
 ## [1.0.0] - 2024-11-02
 
 ### Dodano
@@ -185,8 +181,3 @@ docker compose -f docker-compose.yml -f docker-compose.override.yml up
   - typing-extensions>=4.0.0
   - colorlog>=6.7.0
   - click>=8.0.0
-
-### Uwaga
-Przed uruchomieniem skryptu inicjalizacyjnego należy zainstalować wymagane zależności:
-```bash
-pip install -r requirements.txt

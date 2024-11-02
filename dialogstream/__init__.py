@@ -14,8 +14,8 @@ except ImportError:
     __version__ = "unknown"
 
 from .main import main
-from .process import Process
-from .router import Router
-from .process_utils import ProcessUtils
+from .process import ManagedProcess
+from .router import StreamFilterRouter
+from .process_utils import check_existing_processes
 
-__all__ = ['main', 'Process', 'Router', 'ProcessUtils']
+__all__ = ['main', 'ManagedProcess', 'StreamFilterRouter', 'check_existing_processes']

@@ -10,6 +10,31 @@ To install the DialogStream Python package, you can use pip:
 pip install dialogstream
 ```
 
+## Quick start
+
+```bash
+python -m venv .venv && source .venv/bin/activate && pip install dialogstream
+```
+JSON
+```bash
+python router.py -s "config/stream.json" -p "config/process.json"
+```
+YAML
+```bash
+python router.py -s "config/stream.yaml" -p "config/process.yaml"
+```
+
+## Video stream testing
+```bash
+ffplay rtsp://192.168.1.2:554/Preview_01_sub
+```
+
+```bash
+ffmpeg -i rtsp://192.168.1.2:554/Preview_01_sub -c copy -f segment -segment_time 6 -segment_format mp4 -strftime 1 -reset_timestamps 1 "./recordings/%Y%m%d_%H.mp4" -v debug
+```
+
+
+
 ## Usage
 
 Here's a basic example of how to use the DialogStream package:
@@ -76,6 +101,8 @@ Każda reguła zawiera:
 - `run`: Lista poleceń shell do wykonania, gdzie:
     - `$1, $2, $3...` - odnoszą się do kolejnych URL-i z sekcji filter
     - Polecenia są wykonywane w kolejności zdefiniowanej w liście
+
+
 
 
 For more detailed information, please refer to the [official documentation](https://github.com/dialogstream-com/python/tree/main/docs).
