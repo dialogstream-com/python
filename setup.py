@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="dialogstream",
-    version="1.4.3",
+    version="1.4.4",
     author="pipexy",
     author_email="author@example.com",
     description="A flexible stream routing and filtering system with support for scheduled tasks and event reactions",

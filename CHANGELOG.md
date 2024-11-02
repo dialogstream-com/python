@@ -1,10 +1,15 @@
 # Changelog
 
+## [1.4.4] - 2024-11-02
+
+### Zmieniono
+- aktualizacja dokumentacji
+
 ## [1.4.3] - 2024-11-02
 
 ### Zmieniono
 - aktualizacja dokumentacji
-- 
+
 ## [1.4.2] - 2024-11-02
 
 ### Zmieniono
