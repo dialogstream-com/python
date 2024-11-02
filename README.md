@@ -19,12 +19,10 @@ JSON
 ```bash
 python router.py -s "config/stream.json" -p "config/process.json"
 ```
-YAML
-```bash
-python router.py -s "config/stream.yaml" -p "config/process.yaml"
-```
+
 
 ## Video stream testing
+
 ```bash
 ffplay rtsp://192.168.1.2:554/Preview_01_sub
 ```
@@ -39,13 +37,13 @@ ffmpeg -i rtsp://192.168.1.2:554/Preview_01_sub -c copy -f segment -segment_time
 
 Here's a basic example of how to use the DialogStream package:
 
-### Konfiguracja przepływów (flows.json)
-Plik `config/flows.json` definiuje przepływy strumieni wideo:
+### Flow configuration (flows.json)
+The `config/flows.json` file defines video stream flows:
 ```json
 {
   "flows": [
     {
-      "name": "RTSP z detekcją ruchu",
+      "name": "RTSP with motion detection",
       "steps": [
         "rtsp://user:pass@camera:554/stream",
         "process://motion?fps=5&threshold=0.3",
@@ -53,7 +51,7 @@ Plik `config/flows.json` definiuje przepływy strumieni wideo:
       ]
     },
     {
-      "name": "RTSP z zapisem czasowym", 
+      "name": "RTSP with time-based recording", 
       "steps": [
         "rtsp://user:pass@camera:554/stream",
         "file:///recordings/%Y%m%d_%H%M.mp4"
@@ -63,15 +61,15 @@ Plik `config/flows.json` definiuje przepływy strumieni wideo:
 }
 ```
 
-Każdy przepływ zawiera:
-- `name`: Nazwa opisowa przepływu
-- `steps`: Lista kroków przetwarzania, gdzie każdy krok to URL w formacie:
-    - `rtsp://` - źródło RTSP
-    - `process://` - proces przetwarzania z parametrami
-    - `file://` - zapis do pliku (wspiera strftime format)
+Each flow contains:
+- `name`: A descriptive name for the flow
+- `steps`: A list of processing steps, where each step is a URL in the format:
+    - `rtsp://` - RTSP source
+    - `process://` - Processing step with parameters
+    - `file://` - Save to file (supports strftime format)
 
-### Konfiguracja procesów (process.json)
-Plik `config/process.json` definiuje reguły przetwarzania:
+### Process configuration (process.json)
+The `config/process.json` file defines processing rules:
 ```json
 [
   {
@@ -96,11 +94,11 @@ Plik `config/process.json` definiuje reguły przetwarzania:
 ]
 ```
 
-Każda reguła zawiera:
-- `filter`: Lista wzorców URL do dopasowania
-- `run`: Lista poleceń shell do wykonania, gdzie:
-    - `$1, $2, $3...` - odnoszą się do kolejnych URL-i z sekcji filter
-    - Polecenia są wykonywane w kolejności zdefiniowanej w liście
+Each rule contains:
+- `filter`: A list of URL patterns to match
+- `run`: A list of shell commands to execute, where:
+    - `$1, $2, $3...` - refer to the corresponding URLs from the filter section
+    - Commands are executed in the order defined in the list
 
 
 
