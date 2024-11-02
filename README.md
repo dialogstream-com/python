@@ -1,4 +1,3 @@
-```markdown
 # DialogStream Python Package
 
 This repository contains the Python package for DialogStream, a powerful and flexible conversational AI platform.
@@ -88,6 +87,3 @@ Contributions are welcome! If you find any bugs or have suggestions for improvem
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/dialogstream-com/python/blob/main/LICENSE) file for details.
-```
-
-This README file provides a high-level overview of the DialogStream Python package, including installation instructions, usage examples, and links to the official documentation, contributing guidelines, and license information.
