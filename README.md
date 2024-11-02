@@ -37,24 +37,56 @@ ffmpeg -i rtsp://192.168.1.2:554/Preview_01_sub -c copy -f segment -segment_time
 
 Here's a basic example of how to use the DialogStream package:
 
+![img.png](img.png)
+
 ### Flow configuration (flows.json)
 The `config/flows.json` file defines video stream flows:
 ```json
 {
   "flows": [
     {
-      "name": "RTSP with motion detection",
+      "name": "RTSP z detekcją ruchu i zapisaniem obrazów",
       "steps": [
-        "rtsp://user:pass@camera:554/stream",
-        "process://motion?fps=5&threshold=0.3",
-        "file:///recordings/stream1.mp4"
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///motion"
       ]
     },
     {
-      "name": "RTSP with time-based recording", 
+      "name": "Timelapse z obrazów",
       "steps": [
-        "rtsp://user:pass@camera:554/stream",
-        "file:///recordings/%Y%m%d_%H%M.mp4"
+        "file:///motion",
+        "file:///timelapses"
+      ]
+    },
+    {
+      "name": "Timelapse z obrazów co 1 godzine",
+      "steps": [
+        "file:///motion",
+        "schedule://0 */1 * * *",
+        "file:///timelapses"
+      ]
+    },
+    {
+      "name": "Timelapse z obrazów co 1 godzine",
+      "steps": [
+        "file:///motion",
+        "schedule://0 */1 * * *",
+        "file:///timelapses"
+      ]
+    },
+    {
+      "name": "Email z powiadamieniem, gdy pojawi się nowy obiekt",
+      "steps": [
+        "subscribe://object_detected",
+        "email:///info@softreck.dev"
+      ]
+    },
+    {
+      "name": "Wysyłanie powiadomienia, gdy pojawi się nowy obiekt",
+      "steps": [
+        "file:///motion",
+        "process://detect_object_on_picture",
+        "publish://object_detected"
       ]
     }
   ]

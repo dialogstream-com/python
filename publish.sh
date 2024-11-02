@@ -54,17 +54,6 @@ python -m build
 echo -e "${GREEN}Checking distribution...${NC}"
 twine check dist/*
 
+echo -e "${GREEN}Publishing to PyPI...${NC}"
+twine upload dist/*
 
-
-# Ask for confirmation before publishing
-read -p "Do you want to publish to PyPI? (y/N) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    echo -e "${GREEN}Publishing to PyPI...${NC}"
-    twine upload dist/*
-    
-    echo -e "${GREEN}Publication completed successfully!${NC}"
-else
-    echo -e "${RED}Publication aborted${NC}"
-fi
