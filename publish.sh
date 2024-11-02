@@ -56,7 +56,7 @@ twine check dist/*
 
 
 # Ask for confirmation before publishing
-#read -p "Do you want to publish to PyPI? (y/N) " -n 1 -r
+read -p "Do you want to publish to PyPI? (y/N) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
