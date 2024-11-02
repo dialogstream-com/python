@@ -1,4 +1,8 @@
 # Changelog
+## [1.4.5] - 2024-11-02
+
+### Zmieniono
+- aktualizacja dokumentacji, logo
 
 ## [1.4.4] - 2024-11-02
 

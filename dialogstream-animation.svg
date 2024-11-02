@@ -1,0 +1,107 @@
+<svg viewBox="0 0 470 90" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(100, 45)">
+    <!-- Rotating waves group -->
+    <g>
+      <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0"
+              to="360"
+              dur="6s"
+              repeatCount="indefinite"
+              calcMode="linear"
+      />
+
+      <!-- Sin wave -->
+      <path d="M-40 0 C-30 -20 -15 -20 0 0 C15 20 30 20 40 0"
+            fill="none"
+            stroke="#0095FF"
+            stroke-width="2.5"
+            opacity="0.95">
+        <animate attributeName="d"
+                 dur="2s"
+                 repeatCount="indefinite"
+                 values="M-40 0 C-30 -20 -15 -20 0 0 C15 20 30 20 40 0;
+                        M-40 0 C-30 -2 -15 -2 0 0 C15 2 30 2 40 0;
+                        M-40 0 C-30 -20 -15 -20 0 0 C15 20 30 20 40 0"/>
+      </path>
+
+      <!-- Cos wave -->
+      <path d="M-40 0 C-30 20 -15 20 0 0 C15 -20 30 -20 40 0"
+            fill="none"
+            stroke="#00E5FF"
+            stroke-width="2.5"
+            opacity="0.95">
+        <animate attributeName="d"
+                 dur="2s"
+                 repeatCount="indefinite"
+                 values="M-40 0 C-30 20 -15 20 0 0 C15 -20 30 -20 40 0;
+                        M-40 0 C-30 2 -15 2 0 0 C15 -2 30 -2 40 0;
+                        M-40 0 C-30 20 -15 20 0 0 C15 -20 30 -20 40 0"/>
+      </path>
+
+      <!-- Vertical waves -->
+      <path d="M-40 0 C-30 -20 -15 -20 0 0 C15 20 30 20 40 0"
+            fill="none"
+            stroke="#FF2D55"
+            stroke-width="2.5"
+            opacity="0.95"
+            transform="rotate(90)">
+        <animate attributeName="d"
+                 dur="2s"
+                 repeatCount="indefinite"
+                 values="M-40 0 C-30 -20 -15 -20 0 0 C15 20 30 20 40 0;
+                        M-40 0 C-30 -2 -15 -2 0 0 C15 2 30 2 40 0;
+                        M-40 0 C-30 -20 -15 -20 0 0 C15 20 30 20 40 0"/>
+      </path>
+
+      <path d="M-40 0 C-30 20 -15 20 0 0 C15 -20 30 -20 40 0"
+            fill="none"
+            stroke="#FF9500"
+            stroke-width="2.5"
+            opacity="0.95"
+            transform="rotate(90)">
+        <animate attributeName="d"
+                 dur="2s"
+                 repeatCount="indefinite"
+                 values="M-40 0 C-30 20 -15 20 0 0 C15 -20 30 -20 40 0;
+                        M-40 0 C-30 2 -15 2 0 0 C15 -2 30 -2 40 0;
+                        M-40 0 C-30 20 -15 20 0 0 C15 -20 30 -20 40 0"/>
+      </path>
+
+      <!-- Recording dot -->
+      <circle cx="0" cy="0" r="6"
+              fill="url(#dotGradient)"
+              filter="url(#redGlow)"/>
+    </g>
+  </g>
+
+  <!-- Static text -->
+  <g class="text-dark">
+    <text x="150" y="55"
+          font-family="Arial, sans-serif"
+          font-size="48"
+          font-weight="bold"
+          fill="#2B5BA9">
+      Dialog<tspan fill="#0095FF">Stream</tspan>
+    </text>
+  </g>
+
+  <defs>
+    <radialGradient id="dotGradient">
+      <stop offset="0%" stop-color="#FF3B30"/>
+      <stop offset="100%" stop-color="#FF2D55"/>
+    </radialGradient>
+
+    <filter id="redGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feFlood flood-color="#FF2D55" flood-opacity="0.8" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>

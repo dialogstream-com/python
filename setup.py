@@ -8,9 +8,9 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="dialogstream",
-    version="1.4.4",
-    author="pipexy",
-    author_email="author@example.com",
+    version="1.4.5",
+    author="Tom Sapletta",
+    author_email="info@softreck.dev",
     description="A flexible stream routing and filtering system with support for scheduled tasks and event reactions",
     long_description=long_description,
     long_description_content_type="text/markdown",
