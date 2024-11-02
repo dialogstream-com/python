@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="dialogstream",
-    version="1.4.6",
+    version="1.4.7",
     author="Tom Sapletta",
     author_email="info@softreck.dev",
     description="A flexible stream routing and filtering system with support for scheduled tasks and event reactions",
