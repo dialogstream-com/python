@@ -1,6 +1,17 @@
 # Changelog
 
 
+## [1.3.11] - 2024-11-02
+
+### Zmieniono
+- Poprawiono ścieżki konfiguracyjne w test.py:
+  - Zaktualizowano domyślne ścieżki do plików konfiguracyjnych
+  - Dodano obsługę ścieżek względnych dla dialogstream/config/
+- Ulepszono zarządzanie procesami:
+  - Dodano automatyczne tworzenie katalogów dla wyjść (motion, timelapses)
+  - Poprawiono obsługę błędów przy tworzeniu plików wyjściowych
+  - Ulepszono logowanie błędów procesów ffmpeg
+
 ## [1.3.10] - 2024-11-02
 
 ### Zmieniono

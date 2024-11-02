@@ -33,6 +33,15 @@ python -m build
 echo -e "${GREEN}Checking distribution...${NC}"
 twine check dist/*
 
+
+# Function to extract latest version from CHANGELOG.md
+get_latest_version() {
+    # Extract the first version number found in CHANGELOG.md
+    version=$(grep -m 1 "## \[.*\]" CHANGELOG.md | grep -o "\[.*\]" | tr -d "[]")
+    echo $version
+}
+
+
 # Ask for confirmation before publishing
 read -p "Do you want to publish to PyPI? (y/N) " -n 1 -r
 echo
@@ -40,9 +49,18 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo -e "${GREEN}Publishing to PyPI...${NC}"
     twine upload dist/*
-    
+
+    # Get version and changes
+    VERSION_CHANGELOG=$(get_latest_version)
+    if [ -z "$VERSION_CHANGELOG" ]; then
+        echo "Error: Could not find version in CHANGELOG.md"
+        exit 1
+    fi
     # Create and push git tag
-    VERSION=$(python setup.py --version)
+    VERSION_SETUP=$(python setup.py --version)
+    sed -i "s/$VERSION_SETUP/$VERSION_CHANGELOG/" setup.py
+
+    VERSION=$VERSION_CHANGELOG
     echo -e "${GREEN}Creating and pushing git tag v$VERSION...${NC}"
     git tag -a "v$VERSION" -m "Release version $VERSION"
     git push origin "v$VERSION"
