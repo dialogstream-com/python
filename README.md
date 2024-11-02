@@ -37,7 +37,8 @@ ffmpeg -i rtsp://192.168.1.2:554/Preview_01_sub -c copy -f segment -segment_time
 
 Here's a basic example of how to use the DialogStream package:
 
-![img.png](img.png)
+![image](https://github.com/user-attachments/assets/03a65528-9f94-423c-9fa8-4ac9ccab1cbe)
+
 
 ### Flow configuration (flows.json)
 The `config/flows.json` file defines video stream flows:
