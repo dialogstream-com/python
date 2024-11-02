@@ -24,7 +24,8 @@ if [ -z "$VERSION_CHANGELOG" ]; then
     echo "Error: Could not find version in CHANGELOG.md"
     exit 1
 fi
-# Create and push git tag
+
+# Update version in setup.py
 VERSION_SETUP=$(python setup.py --version)
 sed -i "s/$VERSION_SETUP/$VERSION_CHANGELOG/" setup.py
 
@@ -62,12 +63,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo -e "${GREEN}Publishing to PyPI...${NC}"
     twine upload dist/*
-
-
-    VERSION=$VERSION_CHANGELOG
-    echo -e "${GREEN}Creating and pushing git tag v$VERSION...${NC}"
-    git tag -a "v$VERSION" -m "Release version $VERSION"
-    git push origin "v$VERSION"
     
     echo -e "${GREEN}Publication completed successfully!${NC}"
 else

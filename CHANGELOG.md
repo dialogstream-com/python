@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2024-11-02
+
+### Zmieniono
+- aktualizacja dokumentacji i opisu licencji
+
+
 ## [1.3.12] - 2024-11-02
 
 ### Zmieniono
