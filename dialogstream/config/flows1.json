@@ -1,0 +1,26 @@
+{
+  "flows": [
+    {
+      "name": "RTSP z detekcją ruchu",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "process://motion?fps=5&threshold=0.3",
+        "file:///recordings/%Y%m%d/%H%M%S.mp4"
+      ]
+    },
+    {
+      "name": "RTSP z zapisem czasowym", 
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///recordings/%Y%m%d_%H%M.mp4"
+      ]
+    },
+    {
+      "name": "RTSP z detekcją ruchu i zapisaniem obrazów",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///motion"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "flows": [
+    {
+      "name": "RTSP z detekcją ruchu i zapisaniem obrazów",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///motion"
+      ]
+    },
+    {
+      "name": "Zapis ciągły z rotacją",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///recordings/record_%Y-%m-%d_%H-%M-%S.mp4"
+      ]
+    },
+    {
+      "name": "Stream do YouTube",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "rtmp://a.rtmp.youtube.com/live2/YOUR-STREAM-KEY"
+      ]
+    },
+    {
+      "name": "Lokalny HLS",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///hls/stream.m3u8"
+      ]
+    },
+    {
+      "name": "Archiwum niskiej jakości",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///archive/low_%Y-%m-%d_%H-%M-%S.mp4"
+      ]
+    },
+    {
+      "name": "Timelapse z obrazów",
+      "steps": [
+        "file:///motion/frame_%Y-%m-%d_*.jpg",
+        "file:///timelapses/timelapse_%Y-%m-%d.mp4"
+      ]
+    },
+    {
+      "name": "Multi-output",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        [
+          "file:///stream1/output.mp4",
+          "file:///stream2/output.mp4",
+          "udp://239.0.0.1:1234"
+        ]
+      ]
+    },
+    {
+      "name": "Backup na FTP",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "ftp://user:pass@ftp.example.com/backup/%Y-%m-%d/"
+      ]
+    },
+    {
+      "name": "Stream do RTMP",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "rtmp://streaming.server.com/live/stream"
+      ]
+    },
+    {
+      "name": "Zapis na AWS S3",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "s3://bucket-name/cameras/%Y-%m-%d/"
+      ]
+    }
+  ]
+}

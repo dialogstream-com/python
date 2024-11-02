@@ -1,0 +1,54 @@
+[
+  {
+    "description": "Send notification when motion is detected",
+    "trigger": "motion_detected",
+    "flow": {
+      "filter": [
+        "file://motion",
+        "notification"
+      ],
+      "run": [
+        "curl -X POST -H 'Content-Type: application/json' -d '{\"message\":\"Motion detected\",\"image\":\"$1\"}' http://notification-service/send"
+      ]
+    }
+  },
+  {
+    "description": "Start recording when motion is detected",
+    "trigger": "motion_detected",
+    "flow": {
+      "filter": [
+        "rtsp",
+        "file://recordings"
+      ],
+      "run": [
+        "shell://ffmpeg -i $1 -c copy -t 300 -f mp4 -strftime 1 $2/motion_%Y-%m-%d_%H-%M-%S.mp4"
+      ]
+    }
+  },
+  {
+    "description": "Compress and archive when storage is low",
+    "trigger": "storage_low",
+    "flow": {
+      "filter": [
+        "file://recordings",
+        "file://archive"
+      ],
+      "run": [
+        "shell://ffmpeg -i $1/*.mp4 -c:v libx264 -preset veryslow -crf 28 -vf scale=640:360 -c:a aac -b:a 64k $2/compressed_$(date +%s).mp4 && rm $1/*.mp4"
+      ]
+    }
+  },
+  {
+    "description": "Backup to FTP when network is stable",
+    "trigger": "network_stable",
+    "flow": {
+      "filter": [
+        "file://recordings",
+        "ftp"
+      ],
+      "run": [
+        "shell://ffmpeg -i $1/*.mp4 -c copy -f segment -segment_time 3600 -strftime 1 'ftp://user:pass@ftp.example.com/backup/%Y-%m-%d_%H-%M-%S.mp4'"
+      ]
+    }
+  }
+]

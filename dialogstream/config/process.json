@@ -1,0 +1,144 @@
+[
+  {
+    "description": "Captures JPEG frames from RTSP stream when motion is detected",
+    "filter": [
+      "rtsp",
+      "file://motion"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -vf 'fps=1,setpts=N/TB' -f image2 -strftime 1 $2/%Y-%m-%d_%H-%M-%S.jpg"
+    ]
+  },
+  {
+    "description": "Records RTSP stream with motion detection and saves segments to specified file location",
+    "filter": [
+      "rtsp",
+      "process://motion",
+      "file"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 6 -segment_format mp4 -strftime 1 -reset_timestamps 1 $3"
+    ]
+  },
+  {
+    "description": "Records RTSP stream directly to file segments without motion detection",
+    "filter": [
+      "rtsp",
+      "file"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 6 -segment_format mp4 -strftime 1 -reset_timestamps 1 $2"
+    ]
+  },
+  {
+    "description": "Records RTSP stream and saves segments specifically to archive directory",
+    "filter": [
+      "rtsp",
+      "file://archive"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 6 -segment_format mp4 -strftime 1 -reset_timestamps 1 $2"
+    ]
+  },
+  {
+    "description": "Records RTSP stream with motion detection and saves segments to motion directory",
+    "filter": [
+      "rtsp",
+      "process://motion",
+      "file://motion"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 6 -segment_format mp4 -strftime 1 -reset_timestamps 1 $3"
+    ]
+  },
+  {
+    "description": "Records continuous video with file rotation every 30 minutes",
+    "filter": [
+      "rtsp",
+      "file://recordings"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 1800 -strftime 1 -reset_timestamps 1 $2/%Y-%m-%d_%H-%M-%S.mp4"
+    ]
+  },
+  {
+    "description": "Streams video to YouTube with proper encoding",
+    "filter": [
+      "rtsp",
+      "rtmp://youtube"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c:v libx264 -preset veryfast -b:v 4500k -maxrate 4500k -bufsize 9000k -g 50 -c:a aac -b:a 128k -f flv $2"
+    ]
+  },
+  {
+    "description": "Creates HLS stream for web browser playback",
+    "filter": [
+      "rtsp",
+      "file://hls"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c:v copy -c:a aac -hls_time 4 -hls_list_size 10 -hls_flags delete_segments -f hls $2/stream.m3u8"
+    ]
+  },
+  {
+    "description": "Archives video in low quality for long-term storage",
+    "filter": [
+      "rtsp",
+      "file://archive"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c:v libx264 -preset slow -crf 28 -vf scale=640:360 -c:a aac -b:a 64k -f segment -segment_time 3600 -strftime 1 $2/%Y-%m-%d_%H-%M-%S.mp4"
+    ]
+  },
+  {
+    "description": "Creates timelapse video from captured frames",
+    "filter": [
+      "file://motion",
+      "file://timelapses"
+    ],
+    "run": [
+      "ffmpeg -y -pattern_type glob -i './motion/*.jpg' -framerate 30 -c:v libx264 -pix_fmt yuv420p -strftime 1 ./timelapses/$(date +%Y-%m-%d).mp4"
+    ]
+  },
+  {
+    "description": "Streams to multiple outputs simultaneously",
+    "filter": [
+      "rtsp",
+      "multi-output"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f tee '[f=mpegts]udp://239.0.0.1:1234|[f=mp4]$2/stream1/output.mp4|[f=mp4]$2/stream2/output.mp4'"
+    ]
+  },
+  {
+    "description": "Backs up stream to FTP server",
+    "filter": [
+      "rtsp",
+      "ftp"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 3600 -strftime 1 'ftp://user:pass@ftp.example.com/backup/%Y-%m-%d_%H-%M-%S.mp4'"
+    ]
+  },
+  {
+    "description": "Streams to RTMP server with optimized settings",
+    "filter": [
+      "rtsp",
+      "rtmp"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k -c:a aac -b:a 128k -f flv $2"
+    ]
+  },
+  {
+    "description": "Uploads stream segments to AWS S3",
+    "filter": [
+      "rtsp",
+      "s3"
+    ],
+    "run": [
+      "shell://ffmpeg -i $1 -c copy -f segment -segment_time 3600 -strftime 1 $2/%Y-%m-%d_%H-%M-%S.mp4 && aws s3 sync $2 s3://bucket-name/cameras/"
+    ]
+  }
+]

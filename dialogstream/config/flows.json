@@ -1,0 +1,49 @@
+{
+  "flows": [
+    {
+      "name": "RTSP z detekcją ruchu i zapisaniem obrazów",
+      "steps": [
+        "rtsp://test1234:test1234@192.168.188.225:554/Preview_01_sub",
+        "file:///motion"
+      ]
+    },
+    {
+      "name": "Timelapse z obrazów",
+      "steps": [
+        "file:///motion",
+        "file:///timelapses"
+      ]
+    },
+    {
+      "name": "Timelapse z obrazów co 1 godzine",
+      "steps": [
+        "file:///motion",
+        "schedule://0 */1 * * *",
+        "file:///timelapses"
+      ]
+    },
+    {
+      "name": "Timelapse z obrazów co 1 godzine",
+      "steps": [
+        "file:///motion",
+        "schedule://0 */1 * * *",
+        "file:///timelapses"
+      ]
+    },
+    {
+      "name": "Email z powiadamieniem, gdy pojawi się nowy obiekt",
+      "steps": [
+        "subscribe://object_detected",
+        "email:///info@softreck.dev"
+      ]
+    },
+    {
+      "name": "Wysyłanie powiadomienia, gdy pojawi się nowy obiekt",
+      "steps": [
+        "file:///motion",
+        "process://detect_object_on_picture",
+        "publish://object_detected"
+      ]
+    }
+  ]
+}

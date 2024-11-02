@@ -1,0 +1,53 @@
+[
+  {
+    "description": "Create daily timelapse at midnight",
+    "schedule": "0 0 * * *",
+    "flow": {
+      "filter": [
+        "file://motion",
+        "file://timelapses"
+      ],
+      "run": [
+        "ffmpeg -y -pattern_type glob -i './motion/*.jpg' -framerate 30 -c:v libx264 -pix_fmt yuv420p -strftime 1 ./timelapses/$(date +%Y-%m-%d).mp4"
+      ]
+    }
+  },
+  {
+    "description": "Backup recordings to S3 every 6 hours",
+    "schedule": "0 */6 * * *",
+    "flow": {
+      "filter": [
+        "file://recordings",
+        "s3"
+      ],
+      "run": [
+        "aws s3 sync ./recordings s3://bucket-name/backup/recordings/"
+      ]
+    }
+  },
+  {
+    "description": "Clean up old motion files weekly",
+    "schedule": "0 0 * * 0",
+    "flow": {
+      "filter": [
+        "file://motion"
+      ],
+      "run": [
+        "find ./motion -type f -mtime +7 -delete"
+      ]
+    }
+  },
+  {
+    "description": "Archive recordings monthly",
+    "schedule": "0 0 1 * *",
+    "flow": {
+      "filter": [
+        "file://recordings",
+        "file://archive"
+      ],
+      "run": [
+        "shell://ffmpeg -i $1/*.mp4 -c:v libx264 -preset slow -crf 28 -vf scale=640:360 -c:a aac -b:a 64k $2/archive_$(date +%Y-%m).mp4"
+      ]
+    }
+  }
+]
